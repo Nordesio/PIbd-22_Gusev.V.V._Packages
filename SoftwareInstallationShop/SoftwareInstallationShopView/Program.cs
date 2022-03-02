@@ -8,7 +8,7 @@ using Unity.Lifetime;
 using SoftwareInstallationShopBusinessLogic.BusinessLogics;
 using SoftwareInstallationShopContracts.BusinessLogicsContracts;
 using SoftwareInstallationShopContracts.StoragesContracts;
-using SoftwareInstallationShopListImplement.Implements;
+using SoftwareInstallationShopFileImplement.Implements;
 
 namespace SoftwareInstallationShopView
 {
