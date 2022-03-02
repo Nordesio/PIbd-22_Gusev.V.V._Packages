@@ -231,9 +231,6 @@ namespace SoftwareInstallationShopView
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Package;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Number;
         private System.Windows.Forms.Button ButtonRef;
         private System.Windows.Forms.Button ButtonDel;
         private System.Windows.Forms.Button ButtonUpd;

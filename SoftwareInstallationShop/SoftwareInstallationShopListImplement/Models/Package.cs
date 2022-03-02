@@ -15,6 +15,6 @@ namespace SoftwareInstallationShopListImplement.Models
         public string PackageName { get; set; }
         public decimal Price { get; set; }
     
-    public Dictionary<int, int> ProductComponents { get; set; }
+    public Dictionary<int, int> PackageComponents { get; set; }
     }
 }

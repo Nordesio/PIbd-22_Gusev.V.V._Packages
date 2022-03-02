@@ -27,6 +27,7 @@ namespace SoftwareInstallationShopView
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
+            SoftwareInstallationShopFileImplement.FileDataListSingleton.SaveData();
         }
         private static IUnityContainer BuildUnityContainer()
         {

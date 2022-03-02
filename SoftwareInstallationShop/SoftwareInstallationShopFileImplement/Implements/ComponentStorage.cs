@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SoftwareInstallationShopFileImplement.Implements
 {
-    class ComponentStorage : IComponentStorage
+    public class ComponentStorage : IComponentStorage
     {
         private readonly FileDataListSingleton source;
         public ComponentStorage()
@@ -17,9 +17,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
         }
         public List<ComponentViewModel> GetFullList()
         {
-            return source.Components
-            .Select(CreateModel)
-           .ToList();
+            return source.Components.Select(CreateModel).ToList();
         }
         public List<ComponentViewModel> GetFilteredList(ComponentBindingModel model)
         {
@@ -27,10 +25,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
             {
                 return null;
             }
-            return source.Components
-            .Where(rec => rec.ComponentName.Contains(model.ComponentName))
-           .Select(CreateModel)
-           .ToList();
+            return source.Components.Where(rec => rec.ComponentName.Contains(model.ComponentName)).Select(CreateModel).ToList();
         }
         public ComponentViewModel GetElement(ComponentBindingModel model)
         {
@@ -38,15 +33,12 @@ namespace SoftwareInstallationShopFileImplement.Implements
             {
                 return null;
             }
-            var component = source.Components
-            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName ||
-           rec.Id == model.Id);
+            var component = source.Components.FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
             return component != null ? CreateModel(component) : null;
         }
         public void Insert(ComponentBindingModel model)
         {
-            int maxId = source.Components.Count > 0 ? source.Components.Max(rec =>
-           rec.Id) : 0;
+            int maxId = source.Components.Count > 0 ? source.Components.Max(rec => rec.Id) : 0;
             var element = new Component { Id = maxId + 1 };
             source.Components.Add(CreateModel(model, element));
         }
@@ -61,8 +53,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
         }
         public void Delete(ComponentBindingModel model)
         {
-            Component element = source.Components.FirstOrDefault(rec => rec.Id ==
-           model.Id);
+            Component element = source.Components.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 source.Components.Remove(element);
@@ -72,8 +63,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
                 throw new Exception("Элемент не найден");
             }
         }
-        private static Component CreateModel(ComponentBindingModel model, Component
-       component)
+        private static Component CreateModel(ComponentBindingModel model, Component component)
         {
             component.ComponentName = model.ComponentName;
             return component;

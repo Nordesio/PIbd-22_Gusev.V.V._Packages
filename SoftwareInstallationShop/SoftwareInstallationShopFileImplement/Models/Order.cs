@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SoftwareInstallationShopContracts.Enums;
 
-namespace SoftwareInstallationShopListImplement.Models
+namespace SoftwareInstallationShopFileImplement.Models
 {
-    /// <summary>
-    /// Заказ
-    /// </summary>
+
     public class Order
     {
         public int Id { get; set; }

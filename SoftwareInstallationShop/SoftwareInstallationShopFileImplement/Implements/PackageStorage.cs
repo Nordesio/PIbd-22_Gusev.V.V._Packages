@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SoftwareInstallationShopFileImplement.Implements
 {
-    class PackageStorage : IPackageStorage
+    public class PackageStorage : IPackageStorage
     {
         private readonly FileDataListSingleton source;
         public PackageStorage()
@@ -84,33 +84,33 @@ namespace SoftwareInstallationShopFileImplement.Implements
             {
                 if (!model.PackageComponents.ContainsKey(key))
                 {
-                    product.PackageComponents.Remove(key);
+                    package.PackageComponents.Remove(key);
                 }
             }
             // обновляем существуюущие и добавляем новые
             foreach (var component in model.PackageComponents)
             {
-                if (product.PackageComponents.ContainsKey(component.Key))
+                if (package.PackageComponents.ContainsKey(component.Key))
                 {
-                    product.PackageComponents[component.Key] =
+                    package.PackageComponents[component.Key] =
                    model.PackageComponents[component.Key].Item2;
                 }
                 else
                 {
-                    product.PackageComponents.Add(component.Key,
+                    package.PackageComponents.Add(component.Key,
                    model.PackageComponents[component.Key].Item2);
                 }
             }
-            return product;
+            return package;
         }
         private PackageViewModel CreateModel(Package package)
         {
             return new PackageViewModel
             {
                 Id = package.Id,
-                PackageName = package.ProductName,
+                PackageName = package.PackageName,
                 Price = package.Price,
-                PackageComponents = package.ProductComponents.ToDictionary(recPC => recPC.Key, recPC =>(source.Components.FirstOrDefault(recC => recC.Id == 
+                PackageComponents = package.PackageComponents.ToDictionary(recPC => recPC.Key, recPC =>(source.Components.FirstOrDefault(recC => recC.Id == 
                 recPC.Key)?.ComponentName, recPC.Value))
             };
         }

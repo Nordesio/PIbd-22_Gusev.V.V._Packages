@@ -61,7 +61,7 @@ namespace SoftwareInstallationShopListImplement.Implements
             var tempProduct = new Package
             {
                 Id = 1,
-                ProductComponents = new Dictionary<int, int>()
+                PackageComponents = new Dictionary<int, int>()
             };
             foreach (var product in source.Packages)
             {
@@ -105,23 +105,23 @@ namespace SoftwareInstallationShopListImplement.Implements
             product.PackageName = model.PackageName;
             product.Price = model.Price;
             // удаляем убранные
-            foreach (var key in product.ProductComponents.Keys.ToList())
+            foreach (var key in product.PackageComponents.Keys.ToList())
             {
                 if (!model.PackageComponents.ContainsKey(key))
                 {
-                    product.ProductComponents.Remove(key);
+                    product.PackageComponents.Remove(key);
                 }
             }
             // обновляем существуюущие и добавляем новые
             foreach (var component in model.PackageComponents)
             {
-                if (product.ProductComponents.ContainsKey(component.Key))
+                if (product.PackageComponents.ContainsKey(component.Key))
                 {
-                    product.ProductComponents[component.Key] = model.PackageComponents[component.Key].Item2;
+                    product.PackageComponents[component.Key] = model.PackageComponents[component.Key].Item2;
                 }
                 else
                 {
-                    product.ProductComponents.Add(component.Key, model.PackageComponents[component.Key].Item2);
+                    product.PackageComponents.Add(component.Key, model.PackageComponents[component.Key].Item2);
                 }
             }
             return product;
@@ -130,7 +130,7 @@ namespace SoftwareInstallationShopListImplement.Implements
         {
             // требуется дополнительно получить список компонентов для изделия с названиями и их количество
         var productComponents = new Dictionary<int, (string, int)>();
-            foreach (var pc in product.ProductComponents)
+            foreach (var pc in product.PackageComponents)
             {
                 string componentName = string.Empty;
                 foreach (var component in source.Components)

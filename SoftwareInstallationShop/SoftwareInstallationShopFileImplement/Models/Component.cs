@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftwareInstallationShopListImplement.Models
-{
-    /// <summary>
-    /// Компонент, требуемый для изготовления изделия
-    /// </summary>
+namespace SoftwareInstallationShopFileImplement.Models
+{ 
     public class Component
     {
         public int Id { get; set; }

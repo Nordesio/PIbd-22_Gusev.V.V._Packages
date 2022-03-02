@@ -34,6 +34,10 @@ namespace SoftwareInstallationShopView
             this.ButtonUpd = new System.Windows.Forms.Button();
             this.ButtonDel = new System.Windows.Forms.Button();
             this.ButtonRef = new System.Windows.Forms.Button();
+            this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPackageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPackageIngredients = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,6 +47,11 @@ namespace SoftwareInstallationShopView
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnID,
+            this.ColumnPackageName,
+            this.ColumnPrice,
+            this.ColumnPackageIngredients});
             this.dataGridView.Location = new System.Drawing.Point(4, 2);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 25;
@@ -89,6 +98,28 @@ namespace SoftwareInstallationShopView
             this.ButtonRef.UseVisualStyleBackColor = true;
             this.ButtonRef.Click += new System.EventHandler(this.ButtonRef_Click);
             // 
+            // ColumnID
+            // 
+            this.ColumnID.HeaderText = "id";
+            this.ColumnID.Name = "ColumnID";
+            this.ColumnID.Visible = false;
+            // 
+            // ColumnPackageName
+            // 
+            this.ColumnPackageName.HeaderText = "Название";
+            this.ColumnPackageName.Name = "ColumnPackageName";
+            // 
+            // ColumnPrice
+            // 
+            this.ColumnPrice.HeaderText = "Цена";
+            this.ColumnPrice.Name = "ColumnPrice";
+            // 
+            // ColumnPackageIngredients
+            // 
+            this.ColumnPackageIngredients.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnPackageIngredients.HeaderText = "Ингредиенты";
+            this.ColumnPackageIngredients.Name = "ColumnPackageIngredients";
+            // 
             // FormPackages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -115,5 +146,9 @@ namespace SoftwareInstallationShopView
         private System.Windows.Forms.Button ButtonUpd;
         private System.Windows.Forms.Button ButtonDel;
         private System.Windows.Forms.Button ButtonRef;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPackageName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPackageIngredients;
     }
 }
