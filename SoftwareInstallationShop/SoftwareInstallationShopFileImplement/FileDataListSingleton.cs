@@ -68,7 +68,7 @@ namespace SoftwareInstallationShopFileImplement
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        PackageId = Convert.ToInt32(elem.Element("FlowerId").Value),
+                        PackageId = Convert.ToInt32(elem.Element("PackageId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
