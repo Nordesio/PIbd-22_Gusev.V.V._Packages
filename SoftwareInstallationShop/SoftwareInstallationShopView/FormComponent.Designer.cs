@@ -38,24 +38,26 @@ namespace SoftwareInstallationShopView
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(14, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 15);
+            this.label1.Size = new System.Drawing.Size(77, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Название";
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(77, 6);
+            this.textBoxName.Location = new System.Drawing.Point(88, 8);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(219, 23);
+            this.textBoxName.Size = new System.Drawing.Size(250, 27);
             this.textBoxName.TabIndex = 1;
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Location = new System.Drawing.Point(140, 35);
+            this.ButtonSave.Location = new System.Drawing.Point(153, 47);
+            this.ButtonSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ButtonSave.Name = "ButtonSave";
-            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.Size = new System.Drawing.Size(93, 31);
             this.ButtonSave.TabIndex = 2;
             this.ButtonSave.Text = "Сохранить";
             this.ButtonSave.UseVisualStyleBackColor = true;
@@ -63,9 +65,10 @@ namespace SoftwareInstallationShopView
             // 
             // ButtonCancel
             // 
-            this.ButtonCancel.Location = new System.Drawing.Point(221, 35);
+            this.ButtonCancel.Location = new System.Drawing.Point(253, 47);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCancel.Size = new System.Drawing.Size(86, 31);
             this.ButtonCancel.TabIndex = 3;
             this.ButtonCancel.Text = "Отмена";
             this.ButtonCancel.UseVisualStyleBackColor = true;
@@ -73,13 +76,14 @@ namespace SoftwareInstallationShopView
             // 
             // FormComponent
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 70);
+            this.ClientSize = new System.Drawing.Size(373, 93);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormComponent";
             this.Text = "Компонент";
             this.Load += new System.EventHandler(this.FormComponent_Load);
