@@ -39,8 +39,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
                 return null;
             }
             var package = source.Packages
-            .FirstOrDefault(rec => rec.PackageName == model.PackageName || rec.Id
-           == model.Id);
+            .FirstOrDefault(rec => rec.PackageName == model.PackageName || rec.Id == model.Id);
             return package != null ? CreateModel(package) : null;
         }
         public void Insert(PackageBindingModel model)
@@ -79,7 +78,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
         {
             package.PackageName = model.PackageName;
             package.Price = model.Price;
-            // удаляем убранные
+           
             foreach (var key in package.PackageComponents.Keys.ToList())
             {
                 if (!model.PackageComponents.ContainsKey(key))
@@ -87,7 +86,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
                     package.PackageComponents.Remove(key);
                 }
             }
-            // обновляем существуюущие и добавляем новые
+            
             foreach (var component in model.PackageComponents)
             {
                 if (package.PackageComponents.ContainsKey(component.Key))
@@ -110,8 +109,8 @@ namespace SoftwareInstallationShopFileImplement.Implements
                 Id = package.Id,
                 PackageName = package.PackageName,
                 Price = package.Price,
-                PackageComponents = package.PackageComponents.ToDictionary(recPC => recPC.Key, recPC =>(source.Components.FirstOrDefault(recC => recC.Id == 
-                recPC.Key)?.ComponentName, recPC.Value))
+                PackageComponents = package.PackageComponents.ToDictionary(recPC => recPC.Key, recPC =>
+                (source.Components.FirstOrDefault(recC => recC.Id == recPC.Key)?.ComponentName, recPC.Value))
             };
         }
     }

@@ -84,7 +84,7 @@ namespace SoftwareInstallationShopFileImplement.Implements
             {
                 Id = order.Id,
                 PackageId = order.PackageId,
-                PackageName = source.Packages.FirstOrDefault(flowerName => flowerName.Id == order.PackageId)?.PackageName,
+                PackageName = source.Packages.FirstOrDefault(packageName => packageName.Id == order.PackageId)?.PackageName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = Enum.GetName(order.Status),
