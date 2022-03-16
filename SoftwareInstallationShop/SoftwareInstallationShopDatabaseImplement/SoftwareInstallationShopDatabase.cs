@@ -9,8 +9,7 @@ namespace SoftwareInstallationShopDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=HOME\SQLEXPRESS;Initial
-Catalog=AbstractShopDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CB3DP3M\SQLEXPRESS;Initial Catalog=SoftwareInstallationShopDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
