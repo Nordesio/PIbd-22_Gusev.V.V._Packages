@@ -59,7 +59,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductComponents",
+                name: "PackageComponents",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -70,15 +70,15 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductComponents", x => x.Id);
+                    table.PrimaryKey("PK_PackageComponents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductComponents_Components_ComponentId",
+                        name: "FK_PackageComponents_Components_ComponentId",
                         column: x => x.ComponentId,
                         principalTable: "Components",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductComponents_Packages_PackageId",
+                        name: "FK_PackageComponents_Packages_PackageId",
                         column: x => x.PackageId,
                         principalTable: "Packages",
                         principalColumn: "Id",
@@ -91,13 +91,13 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 column: "PackageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComponents_ComponentId",
-                table: "ProductComponents",
+                name: "IX_PackageComponents_ComponentId",
+                table: "PackageComponents",
                 column: "ComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComponents_PackageId",
-                table: "ProductComponents",
+                name: "IX_PackageComponents_PackageId",
+                table: "PackageComponents",
                 column: "PackageId");
         }
 
@@ -107,7 +107,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "ProductComponents");
+                name: "PackageComponents");
 
             migrationBuilder.DropTable(
                 name: "Components");

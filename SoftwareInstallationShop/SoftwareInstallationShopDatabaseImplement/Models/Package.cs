@@ -17,8 +17,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Models
         [Required]
         public decimal Price { get; set; }
 
-      //  [ForeignKey("PackageId")]
-       // public virtual List<PackageComponent> PackageComponents { get; set; }
+        [ForeignKey("PackageId")]
+        public virtual List<PackageComponent> PackageComponents { get; set; }
 
         [ForeignKey("PackageId")]
         public virtual List<Order> Orders { get; set; }

@@ -86,7 +86,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.ToTable("Packages");
                 });
 
-            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.ProductComponent", b =>
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.PackageComponent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("ProductComponents");
+                    b.ToTable("PackageComponents");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
@@ -122,16 +122,16 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.Navigation("Package");
                 });
 
-            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.ProductComponent", b =>
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.PackageComponent", b =>
                 {
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Component", "Component")
-                        .WithMany()
+                        .WithMany("PackageComponents")
                         .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Package", "Package")
-                        .WithMany()
+                        .WithMany("PackageComponents")
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -141,9 +141,16 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.Navigation("Package");
                 });
 
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Component", b =>
+                {
+                    b.Navigation("PackageComponents");
+                });
+
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Package", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("PackageComponents");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareInstallationShopDatabaseImplement.Models
 {
-    public class ProductComponent
+    public class PackageComponent
     {
         public int Id { get; set; }
         public int PackageId { get; set; }
