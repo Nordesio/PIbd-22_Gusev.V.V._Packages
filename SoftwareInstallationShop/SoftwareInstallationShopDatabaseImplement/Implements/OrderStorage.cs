@@ -17,6 +17,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
         {
             using var context = new SoftwareInstallationShopDatabase();
             return context.Orders
+                .Include(rec => rec.Package)
+                .ToList()
                 .Select(CreateModel)
                 .ToList();
         }
@@ -28,7 +30,9 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             }
             using var context = new SoftwareInstallationShopDatabase();
             return context.Orders
-            .Where(rec => rec.Id.Equals(model.Id))
+            .Include(rec => rec.Package)
+            .Where(rec => rec.Id.Equals(model.Id) || rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+            .ToList()
             .Select(CreateModel)
             .ToList();
         }
@@ -40,25 +44,46 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             }
             using var context = new SoftwareInstallationShopDatabase();
             var order = context.Orders
+            .Include(rec => rec.Package)
             .FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
         public void Insert(OrderBindingModel model)
         {
             using var context = new SoftwareInstallationShopDatabase();
-            context.Orders.Add(CreateModel(model, new Order()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Orders.Add(CreateModel(model, new Order()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Update(OrderBindingModel model)
         {
             using var context = new SoftwareInstallationShopDatabase();
-            var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Delete(OrderBindingModel model)
         {
@@ -91,7 +116,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             {
                 Id = order.Id,
                 PackageId = order.PackageId,
-                PackageName = context.Packages.FirstOrDefault(packageName => packageName.Id == order.PackageId)?.PackageName,
+                PackageName = order.Package.PackageName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = Enum.GetName(order.Status),
