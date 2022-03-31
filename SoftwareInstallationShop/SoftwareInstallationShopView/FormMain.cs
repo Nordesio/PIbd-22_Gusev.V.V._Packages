@@ -125,7 +125,7 @@ namespace SoftwareInstallationShopView
                 MessageBoxIcon.Information);
             }
         }
-        private void ComponentProductsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ComponentPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormReportPackageComponents>();
             form.ShowDialog();

@@ -174,7 +174,7 @@ namespace SoftwareInstallationShopView
             this.компонентыПоИзделиямToolStripMenuItem.Name = "компонентыПоИзделиямToolStripMenuItem";
             this.компонентыПоИзделиямToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.компонентыПоИзделиямToolStripMenuItem.Text = "Компоненты по изделиям";
-            this.компонентыПоИзделиямToolStripMenuItem.Click += new System.EventHandler(this.ComponentProductsToolStripMenuItem_Click);
+            this.компонентыПоИзделиямToolStripMenuItem.Click += new System.EventHandler(this.ComponentPackagesToolStripMenuItem_Click);
             // 
             // списокЗаказовToolStripMenuItem
             // 
