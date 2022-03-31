@@ -30,8 +30,8 @@
         {
             this.ButtonSaveToExcel = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.ColumnComponent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnComponent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -48,14 +48,15 @@
             // 
             // dataGridView
             // 
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnComponent,
             this.ColumnPackage,
+            this.ColumnComponent,
             this.ColumnCount});
             this.dataGridView.Location = new System.Drawing.Point(2, 47);
             this.dataGridView.Name = "dataGridView";
@@ -64,17 +65,17 @@
             this.dataGridView.Size = new System.Drawing.Size(797, 403);
             this.dataGridView.TabIndex = 1;
             // 
-            // ColumnComponent
-            // 
-            this.ColumnComponent.HeaderText = "Компонент";
-            this.ColumnComponent.MinimumWidth = 6;
-            this.ColumnComponent.Name = "ColumnComponent";
-            // 
             // ColumnPackage
             // 
             this.ColumnPackage.HeaderText = "Изделие";
             this.ColumnPackage.MinimumWidth = 6;
             this.ColumnPackage.Name = "ColumnPackage";
+            // 
+            // ColumnComponent
+            // 
+            this.ColumnComponent.HeaderText = "Компонент";
+            this.ColumnComponent.MinimumWidth = 6;
+            this.ColumnComponent.Name = "ColumnComponent";
             // 
             // ColumnCount
             // 
@@ -91,7 +92,7 @@
             this.Controls.Add(this.ButtonSaveToExcel);
             this.Name = "FormReportPackageComponents";
             this.Text = "Компоненты по изделиям";
-            this.Load += new System.EventHandler(this.FormReportProductComponents_Load);
+            this.Load += new System.EventHandler(this.FormReportPackageComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -101,8 +102,8 @@
 
         private System.Windows.Forms.Button ButtonSaveToExcel;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnComponent;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPackage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnComponent;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCount;
     }
 }

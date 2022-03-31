@@ -39,24 +39,22 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
             var components = _componentStorage.GetFullList();
             var packages = _packageStorage.GetFullList();
             var list = new List<ReportPackageComponentViewModel>();
-            foreach (var component in components)
+            foreach (var package in packages)
             {
                 var record = new ReportPackageComponentViewModel
                 {
-                    ComponentName = component.ComponentName,
-                    Packages = new List<Tuple<string, int>>(),
+                    PackageName = package.PackageName,
+                    Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var package in packages)
-                {
-                    if (package.PackageComponents.ContainsKey(component.Id))
+
+                foreach (var component in package.PackageComponents)
                     {
-                        record.Packages.Add(new Tuple<string, int>(package.PackageName,
-                       package.PackageComponents[component.Id].Item2));
-                        record.TotalCount +=
-                       package.PackageComponents[component.Id].Item2;
+                        record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                        record.TotalCount += component.Value.Item2;
                     }
-                }
+
+                
                 list.Add(record);
             }
             return list;
@@ -88,13 +86,13 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        public void SaveComponentsToWordFile(ReportBindingModel model)
+        public void SavePackagesToWordFile(ReportBindingModel model)
         {
             _saveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
-                Components = _componentStorage.GetFullList()
+                Title = "Список изделий",
+                Packages = _packageStorage.GetFullList()
             });
         }
         /// <summary>

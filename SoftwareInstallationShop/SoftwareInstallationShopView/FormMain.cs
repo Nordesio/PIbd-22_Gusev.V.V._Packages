@@ -117,7 +117,7 @@ namespace SoftwareInstallationShopView
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _reportLogic.SaveComponentsToWordFile(new ReportBindingModel
+                _reportLogic.SavePackagesToWordFile(new ReportBindingModel
                 {
                     FileName = dialog.FileName
                 });

@@ -14,7 +14,7 @@ namespace SoftwareInstallationShopView
             InitializeComponent();
             _logic = logic;
         }
-        private void FormReportProductComponents_Load(object sender, EventArgs e)
+        private void FormReportPackageComponents_Load(object sender, EventArgs e)
         {
             try
             {
@@ -24,8 +24,8 @@ namespace SoftwareInstallationShopView
                     dataGridView.Rows.Clear();
                     foreach (var elem in dict)
                     {
-                        dataGridView.Rows.Add(new object[] { elem.ComponentName, "", ""});
-                        foreach (var listElem in elem.Packages)
+                        dataGridView.Rows.Add(new object[] { elem.PackageName, "", ""});
+                        foreach (var listElem in elem.Components)
                         {
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1,listElem.Item2 });
                         }

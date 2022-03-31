@@ -36,24 +36,24 @@ namespace SoftwareInstallationShopBusinessLogic.OfficePackage
                 {
                     ColumnName = "A",
                     RowIndex = rowIndex,
-                    Text = pc.ComponentName,
+                    Text = pc.PackageName,
                     StyleInfo = ExcelStyleInfoType.Text
                 });
                 rowIndex++;
-                foreach (var product in pc.Packages)
+                foreach (var component in pc.Components)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         ColumnName = "B",
                         RowIndex = rowIndex,
-                        Text = product.Item1,
+                        Text = component.Item1,
                         StyleInfo = ExcelStyleInfoType.TextWithBroder
                     });
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         ColumnName = "C",
                         RowIndex = rowIndex,
-                        Text = product.Item2.ToString(),
+                        Text = component.Item2.ToString(),
                         StyleInfo = ExcelStyleInfoType.TextWithBroder
                     });
                     rowIndex++;

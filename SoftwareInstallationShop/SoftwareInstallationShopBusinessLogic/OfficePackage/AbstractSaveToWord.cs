@@ -22,12 +22,15 @@ WordTextProperties { Bold = true, Size = "24", }) },
                     JustificationType = WordJustificationType.Center
                 }
             });
-            foreach (var component in info.Components)
+            string tab = ":\t";
+            foreach (var package in info.Packages)
             {
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> {
-(component.ComponentName, new WordTextProperties { Size = "24", }) },
+
+                    Texts = new List<(string, WordTextProperties)> { (package.PackageName, new WordTextProperties { Size = "24", Bold = true}),
+                                                                      (tab, new WordTextProperties{ Size ="24", }),
+                                                                      (package.Price.ToString(), new WordTextProperties{ Size ="24", }) },
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",

@@ -24,7 +24,7 @@ namespace SoftwareInstallationShopContracts.BusinessLogicsContracts
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        void SaveComponentsToWordFile(ReportBindingModel model);
+        void SavePackagesToWordFile(ReportBindingModel model);
         /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>

@@ -166,7 +166,7 @@ namespace SoftwareInstallationShopView
             // 
             this.списокКомпонентовToolStripMenuItem.Name = "списокКомпонентовToolStripMenuItem";
             this.списокКомпонентовToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.списокКомпонентовToolStripMenuItem.Text = "Список компонентов";
+            this.списокКомпонентовToolStripMenuItem.Text = "Список изделий";
             this.списокКомпонентовToolStripMenuItem.Click += new System.EventHandler(this.ComponentsToolStripMenuItem_Click);
             // 
             // компонентыПоИзделиямToolStripMenuItem
