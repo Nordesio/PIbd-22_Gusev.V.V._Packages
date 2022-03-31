@@ -73,7 +73,7 @@ namespace SoftwareInstallationShopView
             this.comboBoxPackage.Name = "comboBoxPackage";
             this.comboBoxPackage.Size = new System.Drawing.Size(186, 23);
             this.comboBoxPackage.TabIndex = 3;
-            this.comboBoxPackage.SelectedIndexChanged += new System.EventHandler(this.ComboBoxProduct_SelectedIndexChanged);
+            this.comboBoxPackage.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPackage_SelectedIndexChanged);
             // 
             // textBoxCount
             // 

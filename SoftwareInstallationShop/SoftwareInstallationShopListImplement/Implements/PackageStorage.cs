@@ -32,11 +32,11 @@ namespace SoftwareInstallationShopListImplement.Implements
                 return null;
             }
             var result = new List<PackageViewModel>();
-            foreach (var product in source.Packages)
+            foreach (var package in source.Packages)
             {
-                if (product.PackageName.Contains(model.PackageName))
+                if (package.PackageName.Contains(model.PackageName))
                 {
-                    result.Add(CreateModel(product));
+                    result.Add(CreateModel(package));
                 }
             }
             return result;
@@ -47,46 +47,46 @@ namespace SoftwareInstallationShopListImplement.Implements
             {
                 return null;
             }
-            foreach (var product in source.Packages)
+            foreach (var package in source.Packages)
             {
-                if (product.Id == model.Id || product.PackageName == model.PackageName)
+                if (package.Id == model.Id || package.PackageName == model.PackageName)
                 {
-                    return CreateModel(product);
+                    return CreateModel(package);
                 }
             }
             return null;
         }
         public void Insert(PackageBindingModel model)
         {
-            var tempProduct = new Package
+            var tempPackage = new Package
             {
                 Id = 1,
-                ProductComponents = new Dictionary<int, int>()
+                PackageComponents = new Dictionary<int, int>()
             };
-            foreach (var product in source.Packages)
+            foreach (var package in source.Packages)
             {
-                if (product.Id >= tempProduct.Id)
+                if (package.Id >= tempPackage.Id)
                 {
-                    tempProduct.Id = product.Id + 1;
+                    tempPackage.Id = package.Id + 1;
                 }
             }
-            source.Packages.Add(CreateModel(model, tempProduct));
+            source.Packages.Add(CreateModel(model, tempPackage));
         }
         public void Update(PackageBindingModel model)
         {
-            Package tempProduct = null;
-            foreach (var product in source.Packages)
+            Package tempPackage = null;
+            foreach (var package in source.Packages)
             {
-                if (product.Id == model.Id)
+                if (package.Id == model.Id)
                 {
-                    tempProduct = product;
+                    tempPackage = package;
                 }
             }
-            if (tempProduct == null)
+            if (tempPackage == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, tempProduct);
+            CreateModel(model, tempPackage);
         }
         public void Delete(PackageBindingModel model)
         {
@@ -100,37 +100,37 @@ namespace SoftwareInstallationShopListImplement.Implements
             }
             throw new Exception("Элемент не найден");
         }
-        private static Package CreateModel(PackageBindingModel model, Package product)
+        private static Package CreateModel(PackageBindingModel model, Package package)
         {
-            product.PackageName = model.PackageName;
-            product.Price = model.Price;
+            package.PackageName = model.PackageName;
+            package.Price = model.Price;
             // удаляем убранные
-            foreach (var key in product.ProductComponents.Keys.ToList())
+            foreach (var key in package.PackageComponents.Keys.ToList())
             {
                 if (!model.PackageComponents.ContainsKey(key))
                 {
-                    product.ProductComponents.Remove(key);
+                    package.PackageComponents.Remove(key);
                 }
             }
             // обновляем существуюущие и добавляем новые
             foreach (var component in model.PackageComponents)
             {
-                if (product.ProductComponents.ContainsKey(component.Key))
+                if (package.PackageComponents.ContainsKey(component.Key))
                 {
-                    product.ProductComponents[component.Key] = model.PackageComponents[component.Key].Item2;
+                    package.PackageComponents[component.Key] = model.PackageComponents[component.Key].Item2;
                 }
                 else
                 {
-                    product.ProductComponents.Add(component.Key, model.PackageComponents[component.Key].Item2);
+                    package.PackageComponents.Add(component.Key, model.PackageComponents[component.Key].Item2);
                 }
             }
-            return product;
+            return package;
         }
-        private PackageViewModel CreateModel(Package product)
+        private PackageViewModel CreateModel(Package package)
         {
             // требуется дополнительно получить список компонентов для изделия с названиями и их количество
-        var productComponents = new Dictionary<int, (string, int)>();
-            foreach (var pc in product.ProductComponents)
+        var packageComponents = new Dictionary<int, (string, int)>();
+            foreach (var pc in package.PackageComponents)
             {
                 string componentName = string.Empty;
                 foreach (var component in source.Components)
@@ -141,14 +141,14 @@ namespace SoftwareInstallationShopListImplement.Implements
                         break;
                     }
                 }
-                productComponents.Add(pc.Key, (componentName, pc.Value));
+                packageComponents.Add(pc.Key, (componentName, pc.Value));
             }
             return new PackageViewModel
             {
-                Id = product.Id,
-                PackageName = product.PackageName,
-                Price = product.Price,
-                PackageComponents = productComponents
+                Id = package.Id,
+                PackageName = package.PackageName,
+                Price = package.Price,
+                PackageComponents = packageComponents
             };
         }
 
