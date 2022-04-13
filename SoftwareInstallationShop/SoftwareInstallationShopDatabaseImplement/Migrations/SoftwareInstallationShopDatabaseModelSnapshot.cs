@@ -16,8 +16,32 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("PackageVersion", "5.0.15")
+                .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Component", b =>
                 {
@@ -42,6 +66,9 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -61,6 +88,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("PackageId");
 
@@ -113,11 +142,19 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
                 {
+                    b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Order")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Package", "Package")
                         .WithMany("Orders")
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("Package");
                 });
@@ -139,6 +176,11 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Component", b =>

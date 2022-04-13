@@ -18,6 +18,7 @@ Integrated Security=True;MultipleActiveResultSets=True;");
         public virtual DbSet<Package> Packages { set; get; }
         public virtual DbSet<PackageComponent> PackageComponents { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
-        
+        public virtual DbSet<Client> Clients { set; get; }
+
     }
 }
