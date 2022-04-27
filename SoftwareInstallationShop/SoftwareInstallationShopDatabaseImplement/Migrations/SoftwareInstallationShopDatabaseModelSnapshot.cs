@@ -59,6 +59,28 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.ToTable("Components");
                 });
 
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +100,9 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
 
@@ -90,6 +115,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.HasIndex("PackageId");
 
@@ -148,6 +175,10 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Orders")
+                        .HasForeignKey("ImplementerId");
+
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Package", "Package")
                         .WithMany("Orders")
                         .HasForeignKey("PackageId")
@@ -155,6 +186,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("Implementer");
 
                     b.Navigation("Package");
                 });
@@ -186,6 +219,11 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("PackageComponents");
+                });
+
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Package", b =>

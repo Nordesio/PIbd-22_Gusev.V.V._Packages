@@ -19,6 +19,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Package)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
                 .ToList()
                 .Select(CreateModel)
                 .ToList();
@@ -32,13 +33,19 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             using var context = new SoftwareInstallationShopDatabase();
             return context.Orders
             .Include(rec => rec.Package)
-            .Include(rec => rec.Client)
-            .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-            (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-            (model.ClientId.HasValue && rec.ClientId == model.ClientId))
-            .ToList()
-            .Select(CreateModel)
-            .ToList();
+               .Include(rec => rec.Client)
+               .Include(rec => rec.Implementer)
+               .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+                    rec.DateCreate.Date == model.DateCreate.Date) ||
+                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <=
+                    model.DateTo.Value.Date) ||
+                    (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                    (model.SearchStatus.HasValue && model.SearchStatus.Value ==
+                    rec.Status) ||
+                    (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
+               .Select(CreateModel)
+               .ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -50,6 +57,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
             var order = context.Orders
             .Include(rec => rec.Package)
              .Include(rec => rec.Client)
+             .Include(rec => rec.Implementer)
             .FirstOrDefault(rec => rec.Id == model.Id || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
@@ -108,6 +116,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
         {
             order.PackageId = model.PackageId;
             order.ClientId = (int)model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -125,6 +134,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
                 PackageName = order.Package.PackageName,
                 ClientFIO = order.Client.ClientFIO,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = order.ImplementerId.HasValue ? order.Implementer.ImplementerFIO : string.Empty,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = Enum.GetName(order.Status),
