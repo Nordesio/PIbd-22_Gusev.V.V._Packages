@@ -10,7 +10,7 @@ using SoftwareInstallationShopDatabaseImplement;
 namespace SoftwareInstallationShopDatabaseImplement.Migrations
 {
     [DbContext(typeof(SoftwareInstallationShopDatabase))]
-    [Migration("20220427095331_InitialCreate")]
+    [Migration("20220428085017_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,33 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Implementers");
+                });
+
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessageInfoes");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
@@ -167,6 +194,15 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.HasIndex("PackageId");
 
                     b.ToTable("PackageComponents");
+                });
+
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
