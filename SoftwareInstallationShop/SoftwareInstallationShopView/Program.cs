@@ -8,7 +8,7 @@ using Unity.Lifetime;
 using SoftwareInstallationShopBusinessLogic.BusinessLogics;
 using SoftwareInstallationShopContracts.BusinessLogicsContracts;
 using SoftwareInstallationShopContracts.StoragesContracts;
-using SoftwareInstallationShopListImplement.Implements;
+using SoftwareInstallationShopFileImplement.Implements;
 
 namespace SoftwareInstallationShopView
 {
@@ -27,6 +27,7 @@ namespace SoftwareInstallationShopView
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
+            SoftwareInstallationShopFileImplement.FileDataListSingleton.SaveData();
         }
         private static IUnityContainer BuildUnityContainer()
         {

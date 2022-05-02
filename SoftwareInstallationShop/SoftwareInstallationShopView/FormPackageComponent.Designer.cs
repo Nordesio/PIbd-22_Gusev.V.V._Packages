@@ -40,41 +40,44 @@ namespace SoftwareInstallationShopView
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 13);
+            this.label1.Location = new System.Drawing.Point(59, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 15);
+            this.label1.Size = new System.Drawing.Size(91, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Компонент:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(52, 50);
+            this.label2.Location = new System.Drawing.Point(59, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 15);
+            this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Количество:";
             // 
             // comboBoxComponent
             // 
             this.comboBoxComponent.FormattingEnabled = true;
-            this.comboBoxComponent.Location = new System.Drawing.Point(156, 10);
+            this.comboBoxComponent.Location = new System.Drawing.Point(178, 13);
+            this.comboBoxComponent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBoxComponent.Name = "comboBoxComponent";
-            this.comboBoxComponent.Size = new System.Drawing.Size(200, 23);
+            this.comboBoxComponent.Size = new System.Drawing.Size(228, 28);
             this.comboBoxComponent.TabIndex = 2;
             // 
             // textBoxCount
             // 
-            this.textBoxCount.Location = new System.Drawing.Point(156, 47);
+            this.textBoxCount.Location = new System.Drawing.Point(178, 63);
+            this.textBoxCount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxCount.Name = "textBoxCount";
-            this.textBoxCount.Size = new System.Drawing.Size(200, 23);
+            this.textBoxCount.Size = new System.Drawing.Size(228, 27);
             this.textBoxCount.TabIndex = 3;
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Location = new System.Drawing.Point(200, 76);
+            this.ButtonSave.Location = new System.Drawing.Point(220, 101);
+            this.ButtonSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ButtonSave.Name = "ButtonSave";
-            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.Size = new System.Drawing.Size(95, 31);
             this.ButtonSave.TabIndex = 4;
             this.ButtonSave.Text = "Сохранить";
             this.ButtonSave.UseVisualStyleBackColor = true;
@@ -82,9 +85,10 @@ namespace SoftwareInstallationShopView
             // 
             // ButtonCancel
             // 
-            this.ButtonCancel.Location = new System.Drawing.Point(281, 76);
+            this.ButtonCancel.Location = new System.Drawing.Point(321, 101);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCancel.Size = new System.Drawing.Size(86, 31);
             this.ButtonCancel.TabIndex = 5;
             this.ButtonCancel.Text = "Отмена";
             this.ButtonCancel.UseVisualStyleBackColor = true;
@@ -92,15 +96,16 @@ namespace SoftwareInstallationShopView
             // 
             // FormPackageComponent
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 117);
+            this.ClientSize = new System.Drawing.Size(441, 156);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.textBoxCount);
             this.Controls.Add(this.comboBoxComponent);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPackageComponent";
             this.Text = "Компонент изделия";
             this.ResumeLayout(false);

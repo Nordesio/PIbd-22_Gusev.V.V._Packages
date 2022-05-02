@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SoftwareInstallationShopBusinessLogic\SoftwareInstallationShopBusinessLogic.csproj" />
-    <ProjectReference Include="..\SoftwareInstallationShopListImplement\SoftwareInstallationShopListImplement.csproj" />
+    <ProjectReference Include="..\SoftwareInstallationShopFileImplement\SoftwareInstallationShopFileImplement.csproj" />
   </ItemGroup>
 
 </Project>
