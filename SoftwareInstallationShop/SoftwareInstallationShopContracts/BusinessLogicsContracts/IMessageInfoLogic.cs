@@ -6,7 +6,7 @@ using SoftwareInstallationShopContracts.ViewModels;
 
 namespace SoftwareInstallationShopContracts.BusinessLogicsContracts
 {
-    public  interface IMessageInfoLogic
+    public interface IMessageInfoLogic
     {
         List<MessageInfoViewModel> Read(MessageInfoBindingModel model);
         void CreateOrUpdate(MessageInfoBindingModel model);

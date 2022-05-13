@@ -8,17 +8,21 @@ using SoftwareInstallationShopContracts.BusinessLogicsContracts;
 using SoftwareInstallationShopContracts.StoragesContracts;
 using SoftwareInstallationShopContracts.ViewModels;
 using SoftwareInstallationShopContracts.Enums;
-
+using SoftwareInstallationShopBusinessLogic.MailWorker;
 
 namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
 {
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly AbstractMailWorker _mailWorker;
+        private readonly IClientStorage _clientStorage;
 
-        public OrderLogic(IOrderStorage orderStorage)
+        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, AbstractMailWorker mailWorker)
         {
             _orderStorage = orderStorage;
+            _mailWorker = mailWorker;
+            _clientStorage = clientStorage;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -45,6 +49,12 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят
             });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = model.ClientId })?.Email,
+                Subject = "Заказ создан",
+                Text = $"Дата: {DateTime.Now}, сумма: {model.Sum}"
+            });
         }
 
         public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -66,6 +76,12 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
                 DateCreate = order.DateCreate,
                 DateImplement = DateTime.Now,
                 Status = OrderStatus.Выполняется,
+            });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = order.ClientId })?.Email,
+                Subject = "Заказ выполняется",
+                Text = $"Заказ №{order.Id} выполняется, Дата: {DateTime.Now}"
             });
         }
 
@@ -89,27 +105,39 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
                 DateCreate = order.DateCreate,
                 Status = OrderStatus.Готов,
             });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = order.ClientId })?.Email,
+                Subject = "Заказ готов!",
+                Text = $"Заказ №{order.Id} готов, Дата: {DateTime.Now}"
+            });
         }
 
         public void DeliveryOrder(ChangeStatusBindingModel model)
         {
-            var element = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
 
-            if (element == null) throw new Exception("Элемент не найден");
+            if (order == null) throw new Exception("Элемент не найден");
 
-            if (!element.Status.Contains(OrderStatus.Готов.ToString())) throw new Exception("Не в статусе \"Готов\"");
+            if (!order.Status.Contains(OrderStatus.Готов.ToString())) throw new Exception("Не в статусе \"Готов\"");
 
             _orderStorage.Update(new OrderBindingModel
             {
-                Id = element.Id,
-                PackageId = element.PackageId,
-                ClientId = element.ClientId,
-                ImplementerId = element.ImplementerId,
-                Count = element.Count,
-                Sum = element.Sum,
-                DateCreate = element.DateCreate,
-                DateImplement = element.DateImplement,
+                Id = order.Id,
+                PackageId = order.PackageId,
+                ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
+                Count = order.Count,
+                Sum = order.Sum,
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement,
                 Status = OrderStatus.Выдан,
+            });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = order.ClientId })?.Email,
+                Subject = "Заказ выдан",
+                Text = $"Заказ №{order.Id} выдан, Дата: {DateTime.Now}"
             });
         }
     }

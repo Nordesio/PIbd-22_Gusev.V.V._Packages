@@ -53,6 +53,7 @@ namespace SoftwareInstallationShopBusinessLogic.MailWorker
                 {
                     client.Connect(_popHost, _popPort,
                     SecureSocketOptions.SslOnConnect);
+                    
                     client.Authenticate(_mailLogin, _mailPassword);
                     for (int i = 0; i < client.Count; i++)
                     {

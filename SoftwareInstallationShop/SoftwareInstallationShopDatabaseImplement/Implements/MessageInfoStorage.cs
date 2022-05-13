@@ -13,7 +13,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
         public List<MessageInfoViewModel> GetFullList()
         {
             using var context = new SoftwareInstallationShopDatabase();
-            return context.MessageInfoes
+            return context.Messages
             .Select(rec => new MessageInfoViewModel
             {
                 MessageId = rec.MessageId,
@@ -31,7 +31,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
                 return null;
             }
             using var context = new SoftwareInstallationShopDatabase();
-            return context.MessageInfoes
+            return context.Messages
             .Where(rec => (model.ClientId.HasValue && rec.ClientId ==
             model.ClientId) ||
             (!model.ClientId.HasValue &&
@@ -49,13 +49,13 @@ namespace SoftwareInstallationShopDatabaseImplement.Implements
         public void Insert(MessageInfoBindingModel model)
         {
             using var context = new SoftwareInstallationShopDatabase();
-            MessageInfo element = context.MessageInfoes.FirstOrDefault(rec =>
+            MessageInfo element = context.Messages.FirstOrDefault(rec =>
             rec.MessageId == model.MessageId);
             if (element != null)
             {
                 throw new Exception("Уже есть письмо с таким идентификатором");
             }
-            context.MessageInfoes.Add(new MessageInfo
+            context.Messages.Add(new MessageInfo
             {
                 MessageId = model.MessageId,
                 ClientId = model.ClientId,

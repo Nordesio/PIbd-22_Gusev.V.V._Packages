@@ -38,22 +38,20 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
         {
             var element = _clientStorage.GetElement(new ClientBindingModel
             {
-                ClientFIO =
- model.ClientFIO
+                ClientFIO = model.ClientFIO
             });
             if (element != null && element.Id != model.Id)
             {
                 throw new Exception("Уже есть клиент с таким ФИО");
             }
-            if (!Regex.IsMatch(model.Email, @"регулярное выражение"))
+            if (!Regex.IsMatch(model.Email, @"([a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+)"))
             {
-                throw new Exception("В качестве логина почта указана должна быть");
+                throw new Exception("В качестве логина должна быть указана  почта");
             }
-            if (model.Password.Length > _passwordMaxLength || model.Password.Length <
-           _passwordMinLength || !Regex.IsMatch(model.Password,
-           @"^((\w+\d+\W+)|(\w+\W+\d+)|(\d+\w+\W+)|(\d+\W+\w+)|(\W+\w+\d+)|(\W+\d+\w+))[\w\d\W]*$"))
+            if (model.Password.Length > _passwordMaxLength || model.Password.Length < _passwordMinLength
+                 || !Regex.IsMatch(model.Password, @"^((\w+\d+\W+)|(\w+\W+\d+)|(\d+\w+\W+)|(\d+\W+\w+)|(\W+\w+\d+)|(\W+\d+\w+))[\w\d\W]*$"))
             {
-                throw new Exception($"Пароль длиной от {_passwordMinLength} до { _passwordMaxLength } должен быть и из цифр, букв и небуквенных символов должен состоять");
+                throw new Exception($"Пароль длиной от {_passwordMinLength} до { _passwordMaxLength } должен быть из цифр, букв и небуквенных символов");
             }
             if (model.Id.HasValue)
             {

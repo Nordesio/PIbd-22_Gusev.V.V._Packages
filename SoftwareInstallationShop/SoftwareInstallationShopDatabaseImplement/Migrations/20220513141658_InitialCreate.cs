@@ -65,7 +65,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MessageInfoes",
+                name: "Messages",
                 columns: table => new
                 {
                     MessageId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -77,9 +77,9 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MessageInfoes", x => x.MessageId);
+                    table.PrimaryKey("PK_Messages", x => x.MessageId);
                     table.ForeignKey(
-                        name: "FK_MessageInfoes_Clients_ClientId",
+                        name: "FK_Messages_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
@@ -152,8 +152,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessageInfoes_ClientId",
-                table: "MessageInfoes",
+                name: "IX_Messages_ClientId",
+                table: "Messages",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
@@ -185,7 +185,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MessageInfoes");
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Orders");

@@ -105,7 +105,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("MessageInfoes");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
@@ -197,7 +197,7 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("MessageInfo")
                         .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
@@ -249,6 +249,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Client", b =>
                 {
+                    b.Navigation("MessageInfo");
+
                     b.Navigation("Order");
                 });
 
