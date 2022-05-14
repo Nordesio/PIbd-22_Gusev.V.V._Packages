@@ -15,14 +15,17 @@ namespace SoftwareInstallationShopFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string PackageFileName = "Package.xml";
+        private readonly string ClientFileName = "Client.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Package> Packages { get; set; }
+        public List<Client> Clients { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Packages = LoadPackages();
+            Clients = LoadClients();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -34,9 +37,17 @@ namespace SoftwareInstallationShopFileImplement
         }
         public static void SaveData()
         {
-            instance.SaveComponents();
-            instance.SaveOrders();
-            instance.SavePackages();
+            GetInstance().SaveComponents();
+            GetInstance().SaveOrders();
+            GetInstance().SavePackages();
+            GetInstance().SaveClients();
+        }
+        ~FileDataListSingleton()
+        {
+            SaveComponents();
+            SaveOrders();
+            SavePackages();
+            SaveClients();
         }
         private List<Component> LoadComponents()
         {
@@ -110,6 +121,26 @@ namespace SoftwareInstallationShopFileImplement
             }
             return list;
         }
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
+            {
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientFIO = elem.Element("ClientFIO").Value,
+                        Email = elem.Element("Email").Value,
+                        Password = elem.Element("Password").Value,
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveComponents()
         {
             if (Components != null)
@@ -167,6 +198,23 @@ namespace SoftwareInstallationShopFileImplement
                 }
                 var xDocument = new XDocument(xElement);
                 xDocument.Save(PackageFileName);
+            }
+        }
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("ClientFIO", client.ClientFIO),
+                    new XElement("Email", client.Email),
+                    new XElement("Password", client.Password)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
             }
         }
     }

@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SoftwareInstallationShopContracts.BindingModels;
+﻿using SoftwareInstallationShopContracts.BindingModels;
+using SoftwareInstallationShopContracts.Enums;
 using SoftwareInstallationShopContracts.StoragesContracts;
 using SoftwareInstallationShopContracts.ViewModels;
 using SoftwareInstallationShopListImplement.Models;
-using SoftwareInstallationShopContracts.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SoftwareInstallationShopListImplement.Implements
 {
@@ -27,12 +29,19 @@ namespace SoftwareInstallationShopListImplement.Implements
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
-            if (model == null) return null;
-
-            var result = new List<OrderViewModel>();
+            if (model == null)
+            {
+                return null;
+            }
+            List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.PackageId == model.PackageId) result.Add(CreateModel(order));
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate == model.DateCreate) ||
+            (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
+            (model.ClientId.HasValue && order.ClientId == model.ClientId))
+                {
+                    result.Add(CreateModel(order));
+                }
             }
             return result;
         }
@@ -43,7 +52,10 @@ namespace SoftwareInstallationShopListImplement.Implements
 
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id) return CreateModel(order);
+                if (order.Id == model.Id || order.PackageId == model.PackageId)
+                {
+                    return CreateModel(order);
+                }
             }
             return null;
         }
@@ -87,35 +99,52 @@ namespace SoftwareInstallationShopListImplement.Implements
             throw new Exception("Элемент не найден");
         }
 
-        private static Order CreateModel(OrderBindingModel model, Order order)
+        private OrderViewModel CreateModel(Order order)
+        {
+            string packageName = null;
+            for (int i = 0; i < source.Packages.Count; i++)
+            {
+                if (source.Packages[i].Id == order.PackageId)
+                {
+                    packageName = source.Packages[i].PackageName;
+                    break;
+                }
+            }
+            string clientFIO = null;
+            for (int i = 0; i < source.Clients.Count; i++)
+            {
+                if (source.Clients[i].Id == order.ClientId)
+                {
+                    clientFIO = source.Clients[i].ClientFIO;
+                    break;
+                }
+            }
+            return new OrderViewModel
+            {
+                Id = (int)order.Id,
+                PackageId = order.PackageId,
+                ClientId = order.ClientId,
+                PackageName = packageName,
+                ClientFIO = clientFIO,
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = Enum.GetName(order.Status),
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement
+            };
+        }
+
+
+        private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PackageId = model.PackageId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             return order;
-        }
-
-        private OrderViewModel CreateModel(Order order)
-        {
-            string packageName = null;
-            foreach (Package package in source.Packages)
-            {
-                if (package.Id == order.PackageId) packageName = package.PackageName;
-            }
-            return new OrderViewModel
-            {
-                Id = order.Id,
-                PackageId = order.PackageId,
-                PackageName = packageName,
-                Count = order.Count,
-                Sum = order.Sum,
-                Status = order.Status.ToString(),
-                DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
-            };
         }
     }
 }
