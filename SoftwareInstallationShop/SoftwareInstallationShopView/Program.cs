@@ -68,6 +68,7 @@ namespace SoftwareInstallationShopView
             currentContainer.RegisterType<AbstractMailWorker, MailKitWorker>(new SingletonLifetimeManager());
             currentContainer.RegisterType<IMessageInfoLogic, MessageInfoLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMessageInfoStorage, MessageInfoStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IBackUpLogic, BackUpLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
         private static void MailCheck(object obj) => Container.Resolve<AbstractMailWorker>().MailCheck();
