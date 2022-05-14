@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Unity;
-using Unity.Lifetime;
 using SoftwareInstallationShopBusinessLogic.BusinessLogics;
 using SoftwareInstallationShopContracts.BusinessLogicsContracts;
 using SoftwareInstallationShopContracts.StoragesContracts;
+using SoftwareInstallationShopBusinessLogic.OfficePackage;
+using SoftwareInstallationShopBusinessLogic.OfficePackage.Implements;
 using SoftwareInstallationShopDatabaseImplement.Implements;
+using System;
+using System.Windows.Forms;
+using Unity;
+using Unity.Lifetime;
 
 namespace SoftwareInstallationShopView
 {
@@ -39,7 +38,10 @@ namespace SoftwareInstallationShopView
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPackageLogic, PackageLogic>(new HierarchicalLifetimeManager());
-
+            currentContainer.RegisterType<IReportLogic, ReportLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToWord, SaveToWord>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
