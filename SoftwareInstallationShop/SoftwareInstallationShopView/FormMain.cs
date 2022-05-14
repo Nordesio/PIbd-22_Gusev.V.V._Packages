@@ -11,11 +11,16 @@ namespace SoftwareInstallationShopView
     {
         private readonly IOrderLogic _orderLogic;
         private readonly IReportLogic _reportLogic;
-        public FormMain(IOrderLogic orderLogic, IReportLogic reportLogic)
+        private readonly IImplementerLogic _implementerLogic;
+        private readonly IWorkProcess _workProcces;
+        public FormMain(IOrderLogic orderLogic, IReportLogic reportLogic,
+            IWorkProcess workProcess, IImplementerLogic implementerLogic)
         {
             InitializeComponent();
             _orderLogic = orderLogic;
             _reportLogic = reportLogic;
+            _implementerLogic = implementerLogic;
+            _workProcces = workProcess;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -32,7 +37,8 @@ namespace SoftwareInstallationShopView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
-                  
+                    dataGridView.Columns[3].Visible = false;
+
                 }
             }
             catch (Exception ex)
@@ -51,6 +57,17 @@ namespace SoftwareInstallationShopView
             var form = Program.Container.Resolve<FormPackages>();
             form.ShowDialog();
         }
+        private void toolStripMenuItemStartWorks_Click(object sender, EventArgs e)
+        {
+            _workProcces.DoWork(_implementerLogic, _orderLogic);
+            LoadData();
+        }
+
+        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
@@ -58,40 +75,7 @@ namespace SoftwareInstallationShopView
             LoadData();
         }
 
-        private void ButtonTakeOrderInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonOrderReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
+     
         private void ButtonIssuedOrder_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
