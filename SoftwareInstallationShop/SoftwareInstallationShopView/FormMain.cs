@@ -133,18 +133,15 @@ namespace SoftwareInstallationShopView
                     var fbd = new FolderBrowserDialog();
                     if (fbd.ShowDialog() == DialogResult.OK)
                     {
-                        _backUpLogic.CreateBackUp(new
-                        BackUpSaveBinidngModel
-                        { FolderName = fbd.SelectedPath });
-                        MessageBox.Show("Бекап создан", "Сообщение",
-                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (fbd.SelectedPath.Contains("C://")) throw new Exception("Запрещено");
+                        _backUpLogic.CreateBackUp(new BackUpSaveBinidngModel { FolderName = fbd.SelectedPath });
+                        MessageBox.Show("Бекап создан", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-   MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
