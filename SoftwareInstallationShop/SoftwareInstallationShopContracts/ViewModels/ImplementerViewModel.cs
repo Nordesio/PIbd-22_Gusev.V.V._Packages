@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using SoftwareInstallationShopContracts.Attributes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,13 @@ namespace SoftwareInstallationShopContracts.ViewModels
 {
     public class ImplementerViewModel
     {
+        [Column(title: "Номер", width: 100, visible: false)]
         public int Id { get; set; }
-        [DisplayName("ФИО исполнителя")]
+        [Column(title: "ФИО исполнителя", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string ImplementerFIO { get; set; }
-        [DisplayName("Время работы")]
+        [Column(title: "Время работы", width: 100)]
         public int WorkingTime { get; set; }
-        [DisplayName("Время отдыха")]
+        [Column(title: "Время отдыха", width: 100)]
         public int PauseTime { get; set; }
     }
 }
