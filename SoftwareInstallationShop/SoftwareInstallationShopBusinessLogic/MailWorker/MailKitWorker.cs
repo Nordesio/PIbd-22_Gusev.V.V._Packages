@@ -43,8 +43,10 @@ namespace SoftwareInstallationShopBusinessLogic.MailWorker
                 throw;
             }
         }
+        
         protected override async Task<List<MessageInfoBindingModel>> ReceiveMailAsync()
         {
+            
             var list = new List<MessageInfoBindingModel>();
             using var client = new Pop3Client();
             await Task.Run(() =>
@@ -78,7 +80,9 @@ namespace SoftwareInstallationShopBusinessLogic.MailWorker
                 }
             });
             return list;
+            
         }
+        
     }
 
 }

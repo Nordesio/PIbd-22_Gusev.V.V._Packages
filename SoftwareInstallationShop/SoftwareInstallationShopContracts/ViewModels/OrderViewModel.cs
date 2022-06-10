@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SoftwareInstallationShopContracts.Attributes;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 using System.ComponentModel;
 
 namespace SoftwareInstallationShopContracts.ViewModels
@@ -12,6 +14,7 @@ namespace SoftwareInstallationShopContracts.ViewModels
     /// </summary>
     public class OrderViewModel
     {
+        [Column(title: "Номер", width: 100)]
         public int Id { get; set; }
         public int PackageId { get; set; }
 
@@ -19,22 +22,23 @@ namespace SoftwareInstallationShopContracts.ViewModels
         public int? ImplementerId { get; set; }
 
 
-        [DisplayName("ФИО клиента")]
+        [Column(title: "Клиент", width: 150)]
         public string ClientFIO { get; set; }
-      
-        [DisplayName("Изделие")]
+
+        [Column(title: "Изделие", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string PackageName { get; set; }
-        [DisplayName("ФИО исполнителя")]
+        [Column(title: "Исполнитель", width: 150)]
+        [DataMember]
         public string ImplementerFIO { get; set; }
-        [DisplayName("Количество")]
+        [Column(title: "Количество", width: 100)]
         public int Count { get; set; }
-        [DisplayName("Сумма")]
+        [Column(title: "Сумма", width: 50)]
         public decimal Sum { get; set; }
-        [DisplayName("Статус")]
+        [Column(title: "Статус", width: 100)]
         public string Status { get; set; }
-        [DisplayName("Дата создания")]
+        [Column(title: "Дата создания", width: 100)]
         public DateTime DateCreate { get; set; }
-        [DisplayName("Дата выполнения")]
+        [Column(title: "Дата выполнения", width: 100)]
         public DateTime? DateImplement { get; set; }
     }
 }

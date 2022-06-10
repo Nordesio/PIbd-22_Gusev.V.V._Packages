@@ -13,14 +13,16 @@ namespace SoftwareInstallationShopView
         private readonly IReportLogic _reportLogic;
         private readonly IImplementerLogic _implementerLogic;
         private readonly IWorkProcess _workProcces;
+        private readonly IBackUpLogic _backUpLogic;
         public FormMain(IOrderLogic orderLogic, IReportLogic reportLogic,
-            IWorkProcess workProcess, IImplementerLogic implementerLogic)
+            IWorkProcess workProcess, IImplementerLogic implementerLogic, IBackUpLogic backUpLogic)
         {
             InitializeComponent();
             _orderLogic = orderLogic;
             _reportLogic = reportLogic;
             _implementerLogic = implementerLogic;
             _workProcces = workProcess;
+            _backUpLogic = backUpLogic;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -30,23 +32,14 @@ namespace SoftwareInstallationShopView
         {
             try
             {
-                var list = _orderLogic.Read(null);
-                if (list != null)
-                {
-                    dataGridView.DataSource = list;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
-
-                }
+                Program.ConfigGrid(_orderLogic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-            private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormComponents>();
             form.ShowDialog();
@@ -75,12 +68,12 @@ namespace SoftwareInstallationShopView
             LoadData();
         }
 
-     
+
         private void ButtonIssuedOrder_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value); 
+                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
                     _orderLogic.DeliveryOrder(new ChangeStatusBindingModel { OrderId = id });
@@ -129,6 +122,27 @@ namespace SoftwareInstallationShopView
         {
             var form = Program.Container.Resolve<FormMessages>();
             form.ShowDialog();
+        }
+
+        private void создатьБэкапToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_backUpLogic != null)
+                {
+                    var fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        if (fbd.SelectedPath.Contains("C://")) throw new Exception("Запрещено");
+                        _backUpLogic.CreateBackUp(new BackUpSaveBinidngModel { FolderName = fbd.SelectedPath });
+                        MessageBox.Show("Бекап создан", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

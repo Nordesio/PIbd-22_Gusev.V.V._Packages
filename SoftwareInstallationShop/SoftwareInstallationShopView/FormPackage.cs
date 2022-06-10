@@ -25,14 +25,7 @@ namespace SoftwareInstallationShopView
             {
                 try
                 {
-                    PackageViewModel view = _logic.Read(new PackageBindingModel { Id = id.Value })?[0];
-                    if (view != null)
-                    {
-                        textBoxName.Text = view.PackageName;
-                        textBoxPrice.Text = view.Price.ToString();
-                        packageComponents = view.PackageComponents;
-                        LoadData();
-                    }
+                    Program.ConfigGrid(_logic.Read(null), dataGridView);
                 }
                 catch (Exception ex)
                 {
