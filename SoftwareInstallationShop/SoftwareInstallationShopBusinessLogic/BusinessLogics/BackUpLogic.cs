@@ -38,13 +38,19 @@ namespace SoftwareInstallationShopBusinessLogic.BusinessLogics
                 {
                     File.Delete(fileName);
                 }
+                // берем сборку, чтобы от нее создавать объекты
                 Assembly assem = backUpInfo.GetAssembly();
+                // вытаскиваем список классов для сохранения
                 var dbsets = backUpInfo.GetFullList();
+                // берем метод для сохранения (из базвого абстрактного класса)
                 MethodInfo method = GetType().GetTypeInfo().GetDeclaredMethod("SaveToFile");
                 foreach (var set in dbsets)
                 {
+                    // создаем объект из класса для сохранения
                     var elem = assem.CreateInstance(set.PropertyType.GenericTypeArguments[0].FullName);
+                    // генерируем метод, исходя из класса
                     MethodInfo generic = method.MakeGenericMethod(elem.GetType());
+                    // вызываем метод на выполнение
                     generic.Invoke(this, new object[] { model.FolderName });
                 }
                 ZipFile.CreateFromDirectory(model.FolderName, fileName);
