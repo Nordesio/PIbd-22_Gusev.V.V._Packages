@@ -44,6 +44,7 @@ namespace SoftwareInstallationShopView
             this.компонентыПоИзделиямToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStartWorks = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMessages = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +120,8 @@ namespace SoftwareInstallationShopView
             this.компонентыToolStripMenuItem,
             this.изделияToolStripMenuItem,
             this.клиентыToolStripMenuItem,
-            this.исполнителиToolStripMenuItem});
+            this.исполнителиToolStripMenuItem,
+            this.toolStripMenuItemMessages});
             this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
             this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.справочникиToolStripMenuItem.Text = "Справочники";
@@ -190,6 +192,13 @@ namespace SoftwareInstallationShopView
             this.toolStripMenuItemStartWorks.Text = "Запуск работ";
             this.toolStripMenuItemStartWorks.Click += new System.EventHandler(this.toolStripMenuItemStartWorks_Click);
             // 
+            // toolStripMenuItemMessages
+            // 
+            this.toolStripMenuItemMessages.Name = "toolStripMenuItemMessages";
+            this.toolStripMenuItemMessages.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemMessages.Text = "Письма";
+            this.toolStripMenuItemMessages.Click += new System.EventHandler(this.toolStripMenuItemMessages_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -230,5 +239,6 @@ namespace SoftwareInstallationShopView
         private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem исполнителиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWorks;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMessages;
     }
 }

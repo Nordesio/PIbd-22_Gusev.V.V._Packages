@@ -1,13 +1,18 @@
 using SoftwareInstallationShopBusinessLogic.BusinessLogics;
-using SoftwareInstallationShopContracts.BusinessLogicsContracts;
-using SoftwareInstallationShopContracts.StoragesContracts;
+using SoftwareInstallationShopBusinessLogic.MailWorker;
 using SoftwareInstallationShopBusinessLogic.OfficePackage;
 using SoftwareInstallationShopBusinessLogic.OfficePackage.Implements;
+using SoftwareInstallationShopContracts.BindingModels;
+using SoftwareInstallationShopContracts.BusinessLogicsContracts;
+using SoftwareInstallationShopContracts.StoragesContracts;
 using SoftwareInstallationShopDatabaseImplement.Implements;
 using System;
+using System.Configuration;
+using System.Threading;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
+
 
 namespace SoftwareInstallationShopView
 {
@@ -23,10 +28,23 @@ namespace SoftwareInstallationShopView
         static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            var mailSender = Container.Resolve<AbstractMailWorker>();
+            mailSender.MailConfig(new MailConfigBindingModel
+            {
+                MailLogin = ConfigurationManager.AppSettings["MailLogin"],
+                MailPassword = ConfigurationManager.AppSettings["MailPassword"],
+                SmtpClientHost = ConfigurationManager.AppSettings["SmtpClientHost"],
+                SmtpClientPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpClientPort"]),
+                PopHost = ConfigurationManager.AppSettings["PopHost"],
+                PopPort = Convert.ToInt32(ConfigurationManager.AppSettings["PopPort"])
+            });
+            // создаем таймер
+            var timer = new System.Threading.Timer(new TimerCallback(MailCheck), null, 0, 100000);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
-           
+
+
         }
         private static IUnityContainer BuildUnityContainer()
         {
@@ -47,7 +65,11 @@ namespace SoftwareInstallationShopView
             currentContainer.RegisterType<IImplementerLogic, ImplementerLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IImplementerStorage, ImplementerStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IWorkProcess, WorkModeling>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractMailWorker, MailKitWorker>(new SingletonLifetimeManager());
+            currentContainer.RegisterType<IMessageInfoLogic, MessageInfoLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IMessageInfoStorage, MessageInfoStorage>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
+        private static void MailCheck(object obj) => Container.Resolve<AbstractMailWorker>().MailCheck();
     }
 }

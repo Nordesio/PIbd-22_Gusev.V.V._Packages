@@ -81,6 +81,33 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.ToTable("Implementers");
                 });
 
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -167,6 +194,15 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
                     b.ToTable("PackageComponents");
                 });
 
+            modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessageInfo")
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("SoftwareInstallationShopDatabaseImplement.Models.Client", "Client")
@@ -213,6 +249,8 @@ namespace SoftwareInstallationShopDatabaseImplement.Migrations
 
             modelBuilder.Entity("SoftwareInstallationShopDatabaseImplement.Models.Client", b =>
                 {
+                    b.Navigation("MessageInfo");
+
                     b.Navigation("Order");
                 });
 

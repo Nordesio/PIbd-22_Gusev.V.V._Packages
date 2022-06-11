@@ -141,6 +141,16 @@ namespace SoftwareInstallationShopClientApp.Controllers
             APIClient.GetRequest<PackageViewModel>($"api/main/getpackage?packageId={package}");
             return count * prod.Price;
         }
+        [HttpGet]
+        public IActionResult Messages()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<MessageInfoViewModel>>
+                ($"api/main/getmessages?clientId={Program.Client.Id}"));
+        }
     }
-
+   
 }
